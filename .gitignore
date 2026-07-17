@@ -1,0 +1,12 @@
+node_modules/
+frontend/node_modules/
+Functions/bin/
+Functions/obj/
+.vscode/
+*.user
+local.settings.json
+*.log
+.DS_Store
+.env
+*.user
+

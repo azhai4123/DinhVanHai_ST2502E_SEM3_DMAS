@@ -1,0 +1,12 @@
+body {
+  background-color: #f8f9fa;
+}
+.app-container {
+  margin-top: 24px;
+}
+.card-actions {
+  display: flex;
+  gap: 8px;
+  flex-wrap: wrap;
+}
+.table-responsive { margin-top: 12px; }
