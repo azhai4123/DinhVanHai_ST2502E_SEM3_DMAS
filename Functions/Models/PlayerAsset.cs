@@ -3,7 +3,6 @@ namespace Functions.Models
 {
     public class PlayerAsset
     {
-        public Guid PlayerAssetId { get; set; }
         public Guid PlayerId { get; set; }
         public Guid AssetId { get; set; }
         public DateTime AcquiredDate { get; set; }

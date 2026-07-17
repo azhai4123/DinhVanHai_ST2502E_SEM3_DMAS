@@ -3,6 +3,7 @@ using System.Text.Json;
 using Microsoft.Azure.Functions.Worker;
 using Microsoft.Azure.Functions.Worker.Http;
 using Functions.Data;
+using Functions.Helpers;
 using Microsoft.EntityFrameworkCore;
 
 namespace Functions.Functions
@@ -17,8 +18,15 @@ namespace Functions.Functions
         }
 
         [Function("GetAssetsByPlayer")]
-        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", Route = "getassetsbyplayer")] HttpRequestData req)
+        public async Task<HttpResponseData> Run([HttpTrigger(AuthorizationLevel.Function, "get", "options", Route = "getassetsbyplayer")] HttpRequestData req)
         {
+            if (req.Method == "OPTIONS")
+            {
+                var optionsResponse = req.CreateResponse(HttpStatusCode.OK);
+                optionsResponse.AddCors();
+                return optionsResponse;
+            }
+
             var query = from p in _db.Players
                         join pa in _db.PlayerAssets on p.PlayerId equals pa.PlayerId
                         join a in _db.Assets on pa.AssetId equals a.AssetId
@@ -30,6 +38,7 @@ namespace Functions.Functions
 
             var res = req.CreateResponse(HttpStatusCode.OK);
             res.Headers.Add("Content-Type", "application/json");
+            res.AddCors();
             await res.WriteStringAsync(JsonSerializer.Serialize(report));
             return res;
         }

@@ -32,6 +32,12 @@ using (var scope = host.Services.CreateScope())
     try
     {
         var db = services.GetRequiredService<Functions.Data.BattleGameDbContext>();
+        var azFuncEnv = Environment.GetEnvironmentVariable("AZURE_FUNCTIONS_ENVIRONMENT") ?? "Production";
+        if (string.Equals(azFuncEnv, "Development", StringComparison.OrdinalIgnoreCase))
+        {
+            db.Database.EnsureDeleted();
+        }
+
         db.Database.EnsureCreated();
         await Functions.Data.DbInitializer.SeedAsync(db);
     }

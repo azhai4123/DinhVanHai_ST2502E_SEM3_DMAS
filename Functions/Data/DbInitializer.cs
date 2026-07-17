@@ -19,9 +19,9 @@ namespace Functions.Data
             db.Players.AddRange(p1, p2, p3);
             db.Assets.AddRange(a1, a2);
 
-            var pa1 = new PlayerAsset { PlayerAssetId = Guid.NewGuid(), PlayerId = p1.PlayerId, AssetId = a1.AssetId, AcquiredDate = DateTime.UtcNow, Quantity = 1 };
-            var pa2 = new PlayerAsset { PlayerAssetId = Guid.NewGuid(), PlayerId = p2.PlayerId, AssetId = a2.AssetId, AcquiredDate = DateTime.UtcNow, Quantity = 1 };
-            var pa3 = new PlayerAsset { PlayerAssetId = Guid.NewGuid(), PlayerId = p3.PlayerId, AssetId = a1.AssetId, AcquiredDate = DateTime.UtcNow, Quantity = 1 };
+            var pa1 = new PlayerAsset { PlayerId = p1.PlayerId, AssetId = a1.AssetId, AcquiredDate = DateTime.UtcNow, Quantity = 1 };
+            var pa2 = new PlayerAsset { PlayerId = p2.PlayerId, AssetId = a2.AssetId, AcquiredDate = DateTime.UtcNow, Quantity = 1 };
+            var pa3 = new PlayerAsset { PlayerId = p3.PlayerId, AssetId = a1.AssetId, AcquiredDate = DateTime.UtcNow, Quantity = 1 };
 
             db.PlayerAssets.AddRange(pa1, pa2, pa3);
 

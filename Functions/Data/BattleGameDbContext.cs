@@ -17,21 +17,30 @@ namespace Functions.Data
         {
             modelBuilder.Entity<Player>(eb =>
             {
+                eb.ToTable("player");
                 eb.HasKey(x => x.PlayerId);
                 eb.Property(x => x.PlayerId).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<Asset>(eb =>
             {
+                eb.ToTable("asset");
                 eb.HasKey(x => x.AssetId);
                 eb.Property(x => x.AssetId).ValueGeneratedOnAdd();
             });
 
             modelBuilder.Entity<PlayerAsset>(eb =>
             {
-                eb.HasKey(x => x.PlayerAssetId);
-                eb.HasOne(x => x.Player).WithMany().HasForeignKey(x => x.PlayerId);
-                eb.HasOne(x => x.Asset).WithMany().HasForeignKey(x => x.AssetId);
+                eb.ToTable("playerasset");
+                eb.HasKey(x => new { x.PlayerId, x.AssetId });
+                eb.HasOne(x => x.Player)
+                    .WithMany()
+                    .HasForeignKey(x => x.PlayerId)
+                    .OnDelete(DeleteBehavior.Cascade);
+                eb.HasOne(x => x.Asset)
+                    .WithMany()
+                    .HasForeignKey(x => x.AssetId)
+                    .OnDelete(DeleteBehavior.Cascade);
             });
         }
     }
